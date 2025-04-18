@@ -1,4 +1,5 @@
 from ml_model import prepare_data, train_and_predict
+
 from plot import plot_predictions
 
 def run_model_for_ticker(ticker):
