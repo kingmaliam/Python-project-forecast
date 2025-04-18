@@ -40,7 +40,7 @@ def predict_prophet(df):
 
     return df_prophet['ds'][-30:].values, y_true, y_pred
 
-def train_and_predict_all(df):
+def train_and_predict_all(df, ticker="AAPL"):
     scaler = MinMaxScaler()
     X = scaler.fit_transform(df[["Close"]].values)
     y = df["Target"].values
@@ -67,4 +67,9 @@ def train_and_predict_all(df):
         "Prophet": prophet_preds
     }).set_index("Date")
 
-    return result_df.join(prophet_df, how='outer')
+    final_df = result_df.join(prophet_df, how='outer')
+
+    # Save the table to GitHub-visible location
+    final_df.to_csv(f"plots/results_{ticker}.csv")
+
+    return final_df
